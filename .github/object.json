@@ -1,0 +1,78 @@
+{
+    "objects": {
+        "Document": {
+            "template": "WTDocument",
+            "key_attributes": {
+                "identity": {
+                    "name": "string",
+                    "number": "string"
+                },
+                "content": {
+                    "title ": "string",
+                    "description": "string",
+                    "department": "List of strings",
+                    "docType": "string"
+                }
+            },
+            "dependencies": {
+                "LifeCycle": {
+                    "template": "LifeCycleTemplate",
+                    "directory": "wt.lifecycle"
+                }
+            }
+        },
+        "WTChangeOrder2": {
+            "template": "WTChangeOrder2",
+            "directory": "wt.change2",
+            "key_attributes": {
+                "identity": {
+                    "name": "string",
+                    "number": "string"
+                }
+            }
+        },
+        "Queue": {
+            "template": "WTQueue",
+            "directory": "wt.queue",
+            "key_attributes": {
+                "identity": {
+                    "name": "string"
+                }
+            }
+        }
+    },
+    "TeamTemplate": {
+        "template": "TeamTemplate",
+        "directory": "wt.team",
+        "key_attributes": {
+            "identity": {
+                "name": "string"
+            }
+        },
+        "dependencies":{
+            "User":{
+                "template":"WTUser",
+                "directory":"wt.org"
+            }
+        }
+    },
+    "User": {
+        "template": "WTUser",
+        "directory": "wt.org",
+        "key_attributes": {
+            "identity": {
+                "name": "string",
+                "loginName": "string"
+            }
+        }
+    },
+        "Group": {
+        "template": "WTGroup",
+        "directory": "wt.org",
+        "key_attributes": {
+            "identity": {
+                "name": "string"
+            }
+        }
+    }
+}
