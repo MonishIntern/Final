@@ -3,6 +3,9 @@
 ### Overview
 This guide provides comprehensive instructions for creating BAC delete record classes that inherit from BACDeleteRecord in the Windchill BAC (Business Administration Console) module.
 
+## Save as
+- BAC[ObjectName]DeleteRecord.java in output_folder
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -83,6 +86,7 @@ find . -name "*DeleteRecord*.java" -exec echo "=== FILE: {} ===" \; -exec cat {}
 - **Extends**: `_BAC[ObjectName]DeleteRecord` 
 - **Must Declare**:  `private static final long serialVersionUID = 1;`
 - **Logger**: Optional - not used in the example pattern
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 #### Core Methods to Implement
 

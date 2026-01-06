@@ -21,6 +21,7 @@ This guide provides comprehensive instructions for creating BAC batch preview de
 - **Get-content of all files should have limit removed**
 - **Do not read any other md files except this one**
 - **Do not read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `object_path` = `//wsl.localhost/WindchillVM/opt/wnc/wcmod/modules/BAC/src/com/ptc/windchill/bac/client/delegates/preview/`
@@ -158,7 +159,7 @@ public Map<WTReference, PersistableDeltaInfo> getDetailsOfObjects(WTCollection p
     // spec.appendSelectAttribute("iterationInfo. identifier. iterationId", 0, false);
     // spec.appendSelectAttribute("versionInfo.identifier.versionId", 0, false);
     
-    BatchPreviewDelegateHelper. appendContextCriteriaFromMaster(spec, [ObjectType].class, [ObjectMaster].class);
+    BatchPreviewDelegateHelper. appendContextCriteria(spec, [ObjectType].class);
     appendUserModifiedByCriteria(spec);
     spec.appendAnd();
     spec.appendWhere(new SearchCondition([ObjectType].class, WTAttributeNameIfc.ID_NAME, templates.toIdArray()),
@@ -255,14 +256,14 @@ QuerySpec spec = BatchPreviewDelegateHelper.initializeQuerySpecWithCommonAttribu
 **Append Object-Specific Attributes:**
 ```java
 spec.appendSelectAttribute([ObjectType].NAME, 0, false);
-spec.appendSelectAttribute("iterationInfo. identifier.iterationId", 0, false);
-spec.appendSelectAttribute("versionInfo.identifier. versionId", 0, false);
-spec.appendSelectAttribute([ObjectType].ITERATION_NOTE, 0, false);
+// spec.appendSelectAttribute("iterationInfo. identifier.iterationId", 0, false);
+// spec.appendSelectAttribute("versionInfo.identifier. versionId", 0, false);
+// spec.appendSelectAttribute([ObjectType].ITERATION_NOTE, 0, false);
 ```
 
 **Append Context and User Criteria:**
 ```java
-BatchPreviewDelegateHelper.appendContextCriteriaFromMaster(spec, [ObjectType].class, [ObjectMaster].class);
+BatchPreviewDelegateHelper.appendContextCriteria(spec, [ObjectType].class);
 appendUserModifiedByCriteria(spec);
 ```
 
@@ -348,6 +349,7 @@ import com.ptc.windchill.bac.BACGenericDeleteRecordHelper;
 import com.ptc.windchill.bac.BACResource;
 import com.ptc. windchill.bac.CollectionCategory;
 import com.ptc.windchill.bac.client.delegates.preview.BACBatchPreviewDelegate;
+import com.ptc.windchill.bac.client.delegates.preview.impl.BatchPreviewDelegateHelper;
 import com.ptc.windchill.bac.client.model.PersistableDeltaInfo;
 import com.ptc.windchill.bac.client. resources.BACClientResource;
 import wt.fc.ObjectReference;
@@ -404,12 +406,6 @@ After completing the delegate implementation:
 1. **Navigate to service configuration**:  `cd {service_path}`
 2. **Open BAC-delegates.xconf**:  Edit the configuration file
 3. **Add delegate entry**:  Register the new batch preview delegate
-4. **Configuration pattern**:
-```xml
-<Service context="default" name="com.ptc.windchill. bac.client.delegates.preview.BACBatchPreviewDelegate">
-    <Option cardinality="duplicate" serviceClass="[YourDelegateClass]" selector="[ObjectType]"/>
-</Service>
-```
 
 ### Validation Checklist
 Before finalizing the generated batch preview delegate:
@@ -428,4 +424,3 @@ Before finalizing the generated batch preview delegate:
 - [ ] Uses proper exception handling in initialization block
 - [ ] No unused imports or unnecessary code
 - [ ] TODO comments mark uncertain business logic
-- [ ] Service configuration updated in BAC-delegates.xconf

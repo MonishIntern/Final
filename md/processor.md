@@ -3,6 +3,10 @@
 ### Overview
 This guide provides comprehensive instructions for creating BAC delete processor classes that extend from BACDeleteProcessor in the Windchill BAC (Business Administration Console) module.
 
+
+## Save as
+- BAC[ObjectName]DeleteProcessor.java in output_folder
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -21,6 +25,7 @@ This guide provides comprehensive instructions for creating BAC delete processor
 - **Get-content of all files should have limit removed**
 - **Do not read any other md files except this one**
 - **Do not read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `object_path` = `//wsl.localhost/WindchillVM/opt/wnc/wcmod/modules/BAC/src/com/ptc/windchill/bac/delegates/`
@@ -82,6 +87,7 @@ find . -name "*DeleteProcessor*. java" -exec echo "=== FILE: {} ===" \; -exec ca
 - **Private Fields**:
   - `Map<ObjectIdentifier, List<ConflictType>> oidToConflictMap` - Track conflicts by object ID
   - `Map<ConflictType, String> conflictTypeToMessage` - Track conflict messages
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 #### Core Methods to Implement
 

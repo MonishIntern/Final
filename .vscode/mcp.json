@@ -1,0 +1,15 @@
+{
+    "servers": {
+        "Windchill": {
+            "command": "python",
+            "args": ["C:\\FINAL\\tool.py"],
+            "env": {}
+        },
+        "db":{
+            "command": "python",
+            "args": [
+                "C:\\FINAL\\db.py"
+            ],
+        }
+    }
+}

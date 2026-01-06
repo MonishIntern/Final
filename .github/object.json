@@ -74,5 +74,14 @@
                 "name": "string"
             }
         }
+    },
+    "WTChangeVariance": {
+        "template": "WTVariance",
+        "directory": "wt.change2",
+        "key_attributes": {
+            "identity": {
+                "name": "string"
+            }
+        }
     }
 }

@@ -3,6 +3,10 @@
 ### Overview
 This guide provides comprehensive instructions for creating BAC report delegate classes that extend from DefaultReportDelegate in the Windchill BAC (Business Administration Console) module.
 
+
+## Save as
+- BAC[ObjectName]ReportDelegate.java in output_folder
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -21,6 +25,7 @@ This guide provides comprehensive instructions for creating BAC report delegate 
 - **Get-content of all files should have limit removed**
 - **Do not read any other md files except this one**
 - **Do not read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `report_path` = `//wsl.localhost/WindchillVM/opt/wnc/wcmod/modules/BAC/src/com/ptc/windchill/bac/impl/`
@@ -80,6 +85,7 @@ find . -name "*Report*.java" -exec echo "=== FILE: {} ===" \; -exec cat {} \;
 - **Extends**: `DefaultReportDelegate`
 - **Logger**: Use static Log4j2 Logger with static block initialization
 - **Dependent Delegates**: Include other report delegates for dependency handling
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 #### Class Declaration Pattern
 ```java
@@ -195,7 +201,7 @@ protected String getDescriptionForAccessibleObject(Persistable obj, Locale local
         [ObjectType] object = ([ObjectType]) obj;
         try {
             // TODO: Add object-specific description enhancements
-            if (WorkInProgressHelper.isCheckedOut(object)) {
+            if (WorkInProgressHelper.isCheckedOut((Workable) object)) {
                 WTMessage wtMessage = new WTMessage(BACResource.class.getName(),
                         BACResource.OBJECT_CHECKED_OUT, null);
                 objectDescription = objectDescription + "<BR>" + wtMessage.getLocalizedMessage();
