@@ -3,6 +3,9 @@
 ### Overview
 This guide provides comprehensive instructions for creating delegate classes that inherit from base delegate classes in the Windchill BAC (Business Administration Console) module.
 
+## Save as
+- ExpImpFor[ObjectName].java in output_folder
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -21,6 +24,7 @@ This guide provides comprehensive instructions for creating delegate classes tha
 - **Get-content of all files should have limit removed**
 - **Donot read any other md files except this one**
 - **Donot read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `object.json` = `.github/object.json`
@@ -290,3 +294,4 @@ Before finalizing the generated delegate:
 - [ ] Object creation methods return correct types (Versioned)
 - [ ] Master object handling is implemented if needed
 - [ ] TODO comments mark uncertain business logic
+

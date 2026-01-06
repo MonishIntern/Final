@@ -3,6 +3,9 @@
 ### Overview
 This guide provides comprehensive instructions for creating delegate classes that inherit from base delegate classes in the Windchill BAC (Business Administration Console) module.
 
+## Save as 
+- BAC[ObjectName]CollectionDelegate.java in output_folder
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -21,6 +24,7 @@ This guide provides comprehensive instructions for creating delegate classes tha
 - **Get-content of all files should have limit removed**
 - **Donot read any other md files except this one**
 - **Donot read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `object_path` = `//wsl.localhost/WindchillVM/opt/wnc/wcmod/modules/BAC/src/com/ptc/windchill/bac/delegates/`
@@ -82,6 +86,7 @@ find . -name "*CollectionDelegate*.java" -exec echo "=== FILE: {} ===" \; -exec 
   - `CollectionCategory collectionCategory` - stores the collection category (inherited)
   - `Class<? > objClass` - stores the persistable object class (inherited from base class)
 
+
 #### Note
 - Do not create method `initialize()`, it is inherited from base class
 - As mention in QuerySpec below, Use same pattern in collectDeleted method for delete record class
@@ -101,7 +106,9 @@ find . -name "*CollectionDelegate*.java" -exec echo "=== FILE: {} ===" \; -exec 
    - Call `appendDateRangeCriteria` for date filtering using pattern: 
      ```java
      if (spec.getDateRange() != null) {
-         collnQuery.appendAnd();
+             if (collnQuery.getConditionCount() != 0) {
+                collnQuery.appendAnd();
+            }
          BACCollectionSvrHelper.appendDateRangeCriteria(collnQuery, objClass, spec. getDateRange());
      }
      ```
@@ -161,7 +168,9 @@ collnQuery.appendWhere(new SearchCondition(objClass, AttributeName.ATTRIBUTE, Se
 **Date Range Filtering:**
 ```java
 if (spec.getDateRange() != null) {
-    collnQuery.appendAnd();
+    if (collnQuery.getConditionCount() != 0) {
+                collnQuery.appendAnd();
+            }
     BACCollectionSvrHelper.appendDateRangeCriteria(collnQuery, objClass, spec.getDateRange());
 }
 ```
@@ -214,6 +223,7 @@ import com.ptc.windchill. bac.BACCollectionSpec;
 import com.ptc. windchill.bac.BACCollectionSvrHelper;
 import com.ptc.windchill.bac.CollectionCategory;
 import com.ptc.windchill.bac.delegates.DefaultCollectionDelegate;
+import com.ptc.windchill.bac.ObjRegistryHelper;
 import wt.fc.ObjectReference;
 import wt.fc.collections.WTCollection;
 import wt.fc.collections.WTHashSet;
@@ -281,3 +291,4 @@ Before finalizing the generated delegate:
 - [ ] getCollectionCategory() returns appropriate enum value
 - [ ] isUsingBACGenericDeleteRecord() returns correct boolean
 - [ ] TODO comments mark uncertain business logic
+

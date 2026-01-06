@@ -3,6 +3,11 @@
 ### Overview
 This guide provides comprehensive instructions for creating BAC delete record attributes classes that extend from BACDeleteRecordAttributes in the Windchill BAC (Business Administration Console) module.
 
+
+## Save as
+- BAC[ObjectName]DeleteRecordAttributes.java in output_folder
+
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -21,6 +26,7 @@ This guide provides comprehensive instructions for creating BAC delete record at
 - **Get-content of all files should have limit removed**
 - **Do not read any other md files except this one**
 - **Do not read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `object_path` = `//wsl. localhost/WindchillVM/opt/wnc/wcmod/modules/BAC/src/com/ptc/windchill/bac/delegates/`
@@ -81,6 +87,7 @@ find . -name "*DeleteRecordAttributes*.java" -exec echo "=== FILE: {} ===" \; -e
 - **Extends**: `BACDeleteRecordAttributes` (not implements interface)
 - **Static Fields**: Declare constants for custom attribute names
 - **Logger**: Optional - not used in the example pattern
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 #### Static Field Declarations
 Declare static final fields for attribute names:

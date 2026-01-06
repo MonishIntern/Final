@@ -3,6 +3,10 @@
 ### Overview
 This guide provides comprehensive instructions for creating BAC identity delegate classes that extend from BACIdentityDelegateImpl in the Windchill BAC (Business Administration Console) module.
 
+
+## Save as
+- BAC[ObjectName]IdentityDelegate.java in output_folder
+
 ### Immediate Actions Required
 - IMMEDIATELY after successful, use `run_in_terminal` to access directory
 - List directory contents first
@@ -21,6 +25,7 @@ This guide provides comprehensive instructions for creating BAC identity delegat
 - **Get-content of all files should have limit removed**
 - **Do not read any other md files except this one**
 - **Do not read any business logic other than object analysis logic**
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 ### Directory Configuration
 - `object_path` = `//wsl. localhost/WindchillVM/opt/wnc/wcmod/modules/BAC/src/com/ptc/windchill/bac/delegates/`
@@ -81,6 +86,7 @@ find . -name "*IdentityDelegate*.java" -exec echo "=== FILE: {} ===" \; -exec ca
 - **Extends**: `BACIdentityDelegateImpl`
 - **Logger**: Use static Log4j2 Logger:  `LogR.getLoggerInternal(ClassName.class.getName())`
 - **Static Helper Methods**: Include static methods for identity construction
+- **Collection Category**: Use appropriate enum from `CollectionCategory` which is uppercase of object name
 
 #### Core Methods to Implement
 
