@@ -171,6 +171,12 @@ deleteRecord.setStateName(templateObj.getState().getDisplay());
 deleteRecord.setTypeName(templateObj.getType().getDisplay());
 ``` -->
 
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
+```
+
 #### Helper Classes Reference
 Common helper classes used for attribute extraction:
 - `VersionControlHelper` - For version-related attributes

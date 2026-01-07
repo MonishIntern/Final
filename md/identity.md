@@ -207,6 +207,12 @@ public WTMessage getIdentityMessageFromObject(Object obj) throws WTException {
 }
 ```
 
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
+```
+
 **Static Helper Methods Pattern:**
 ```java
 public static WTMessage getIdentity([ObjectType] obj) throws WTException {

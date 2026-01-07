@@ -187,6 +187,12 @@ while (iterator.hasNext()) {
 }
 ```
 
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
+```
+
 #### Critical Rules
 
 1. **DO NOT create Constructor** - Use protected fields initialization in `initialize()` method

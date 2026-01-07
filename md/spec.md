@@ -94,6 +94,13 @@ public BAC[Template_Name]SpecProcessor() {
     setCollnCategory(CollectionCategory.[Template_Name]);
 }
 ```
+
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
+```
+
 - **process Method**
 ```java
 @Override

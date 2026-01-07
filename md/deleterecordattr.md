@@ -140,6 +140,12 @@ protected LinkedHashMap<String, String> getIdentityAttributesWithValues(BACGener
 }
 ```
 
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
+```
+
 #### Attribute Value Extraction Patterns
 
 **Standard Attributes (from base class):**

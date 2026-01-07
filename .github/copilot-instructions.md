@@ -501,3 +501,98 @@ wsl -d WindchillVM -- bash -c "source /opt/wnc/wnc_env urel_241 && windchill sto
 - Database credentials should be handled securely (environment variables or secure vault)
 - Each SQL script execution should be logged for audit purposes
 - Consider transaction rollback capabilities for failed executions
+
+
+## Full Add-Object Flow (Steps 1–14)
+This flow registers a new BAC object end-to-end and generates all related delegates and tests.
+
+1) Object Selection & Initialization
+- Reads the complete `object.json`, lists available objects, and asks you to choose which to process.
+- Extracts: `template`, `directory`, `key_attributes`, `dependencies`.
+
+2) Directory Structure Creation
+- Creates `{wt_path}{directory}\bac\` and `{test_path}{directory}\bac\` if missing.
+
+3) Register Admin Object
+- Reads `md/register.md` and adds the admin object registration (valid XML; no existing entries modified) under the object registry at:
+  - `obj_registry_path`
+
+4) Register Collection Category
+- Reads `md/category.md` and updates `CollectionCategory.java` with:
+  - `public static final_v2 CollectionCategory <Template> = toCollectionCategory("<Template>");`
+
+5) Generate Delegates (8 files)
+- Reads the following templates and generates Java under `wt.{directory}.bac`:
+  - `collection.md`, `deleterecord.md`, `deleterecordattr.md`, `identity.md`, `processor.md`, `report.md`, `spec.md`, `tracking.md`
+- Output: `{wt_path}{directory}\bac\{DelegateName}.java`
+
+6) Generate ExpImp Handler
+- Reads `md/expimp.md`.
+- Saves to `{ixl_handler_path}{directory}/ixb/{template}.java`.
+
+7) Register Services
+- Reads `md/services.md`.
+- Adds `<Option>` entries in:
+  - `service_xconf_path`
+- Ensures 8 delegates are registered and XML is valid.
+
+8) Update BAC Specifications
+- Reads `md/bacspec.md`.
+- Updates `BACSpec.xsd` with `<xs:complexType>` and `<xs:element>` entries for the new template.
+
+9) Update Delete Records
+- Reads `md/generic.md`.
+- Updates `BACGenericDeleteRecordObjInfos.xsd` with new `<xs:element>` entries.
+
+10) Update RB Info
+- Reads `md/rb.info.md`.
+- Updates `CollectionCategoryRB.rbInfo` under:
+  - `\\wsl.localhost\WindchillVM\opt\wnc\wcmod\modules\BAC\src\com\ptc\windchill\bac\`
+
+11) Batch Preview (Optional if supported)
+- Reads `md/preview.md`, generates `Batch<Template>PreviewDelegate.java` and registers it in `BAC-delegates.xconf` under `preview_delegate_path`.
+
+12) Delta Controller
+- Reads `md/deltacontroller.md` and updates the DeltaController file as specified.
+
+12.1) Register Export Helper
+- Reads `md/exporthelper.md`.
+- Updates `BACExportHelper.java` with a `spec.append(...)` line for the new template in `typesXmlSpec(List<String> types)`.
+
+13) Generate Tests (9 files)
+- Reads test templates in `test/` and generates the 9 corresponding test classes under:
+  - `{test_path}{directory}\bac\`
+
+14) Execute BAC SQL Scripts
+- Identifies and executes SQL scripts under:
+  - `\\wsl.localhost\WindchillVM\opt\wnc\wcmod\modules\BAC\db\sql3\`
+- Validates tables, metadata, and indexes.
+
+Validation and Completion
+- Each step validates outputs (syntax, XML/XSD correctness, presence of new entries, etc.).
+- Final checklist included at the end of this guide.
+
+---
+
+## Delegate-Only Flow (Generate One Delegate)
+This flow generates only one delegate file (and its corresponding test), while performing all other registration and update steps for the object. Use this when you want to add or refresh a single delegate without generating the others.
+
+Behavior differences vs Full flow:
+- Step 5 (Delegates): Only the selected delegate is generated under `{wt_path}{directory}\bac\`.
+- Step 7 (Services): Only the selected delegate is registered in `BAC-service.properties.xconf`.
+- Step 13 (Tests): Only the test corresponding to the selected delegate is generated under `{test_path}{directory}\bac\`.
+
+All other steps (1–4, 6, 8–12.1, 14) still run and are validated so the object remains fully integrated.
+
+Examples:
+- `BAC generate-delegate --object WTChangeOrder2 --delegate Processor`
+- `BAC generate-delegate --object WTPart --delegate Report --dry-run false`
+
+---
+
+## Dry-Run and Commit Strategy
+- Default is `--dry-run true`: files are computed and validated, but not written.
+- Set `--dry-run false` to apply changes.
+- After local verification, you can commit changes to your VCS as needed.
+
+---

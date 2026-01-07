@@ -153,8 +153,14 @@ protected void setAttributes(BACGenericDeleteRecord deleteRecord, Persistable ob
 ```java
 @Override
 protected CollectionCategory getCollectionCategory() {
-    return CollectionCategory.[OBJECT_NAME];
+    return CollectionCategory.[OBJECT_NAME_UPPERCASE];
 }
+```
+
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
 ```
 
 #### Object Filtering Patterns

@@ -285,6 +285,12 @@ private void checkCheckoutConflict([ObjectType] obj, WTSet conflictingObjects) t
 }
 ```
 
+**Collection Category:**
+```java
+CollectionCategory TEMPLATE_UPPERCASE = toCollectionCategory("Template");
+return CollectionCategory.TEMPLATE_UPPERCASE;
+```
+
 #### Critical Rules
 
 1. **DO NOT implement interface** - Always extend `BACDeleteProcessor`
